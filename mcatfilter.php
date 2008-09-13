@@ -5,7 +5,7 @@ Plugin URI: http://www.xhaleera.com/index.php/products/wordpress-mseries-plugins
 Description: Excludes selected categories from post requests
 Author: Christophe SAUVEUR
 Author URI: http://www.xhaleera.com
-Version: 0.1
+Version: 0.2
 */
 
 // Loading mautopopup plugin text domain
@@ -20,7 +20,7 @@ class mCatFilter
 	var $minWPversion = '2.1';				//!< Minimum required WP version
 	var $productDomain = 'mcatfilter'; 		//!< Product domain name
 	var $productName;						//!< Product name
-	var $version = '0.1';					//!< Software version number
+	var $version = '0.2';					//!< Software version number
 	var $storedVersion;						//!< Installed version number if any
 	var $categories;						//!< Excluded categories list
 	
@@ -36,14 +36,22 @@ class mCatFilter
 		add_action('admin_menu', array(&$this, 'create_admin_page'));
 		
 		if ($this->installation_complete())
+		{
 			add_action('pre_get_posts', array(&$this, 'filter_categories'));
+			add_action('delete_category', array(&$this, 'update_on_category_removal'));
+			add_action('create_category', array(&$this, 'update_on_category_update'));
+			add_action('add_category', array(&$this, 'update_on_category_update'));
+			add_action('edit_category', array(&$this, 'update_on_category_update'));
+			add_action('edit_category_form', array(&$this, 'category_form_controls'));
+		}
 	}
 
 	/** \brief Creates sub-page in the Options menu.
 	*/
 	function create_admin_page()
 	{
-		add_management_page(sprintf(__('%s Options', $this->productDomain), $this->productName), $this->productName, 'manage_options', $this->productDomain, array(&$this, 'options_page'));
+		if (current_user_can('manage_options'))
+			add_management_page(sprintf(__('%s Options', $this->productDomain), $this->productName), $this->productName, 'manage_options', $this->productDomain, array(&$this, 'options_page'));
 	}
 
 	/** \brief Tells if the installation of the plugin has been correctly done.
@@ -59,6 +67,38 @@ class mCatFilter
 		return (!empty($value) && preg_match("/^[1-9][0-9]*$/", $value));
 	}	
 	
+	function is_excluded($cat_ID)
+	{
+		return in_array($cat_ID, $this->categories);
+	}
+	
+	function remove_category($cat_ID)
+	{
+		// Refreshing options from database
+		$this->load_options();
+		
+		// Removing deleted category ID from excluded categories list if applying
+		if ($this->is_excluded($cat_ID))
+		{
+			$this->categories = array_diff($this->categories, array($cat_ID));
+			update_option('mcatfilter_categories', implode(',', $this->categories));
+		}
+	}
+	
+	function add_category($cat_ID)
+	{
+		// Refreshing options from database
+		$this->load_options();
+		
+		// Adding category ID to excluded categories list if not already present
+		if (!$this->is_excluded($cat_ID))
+		{
+			$this->categories[] = $cat_ID;
+			sort($this->categories, SORT_NUMERIC);
+			update_option('mcatfilter_categories', implode(',', $this->categories));
+		}
+	}
+	
 	/** \brief Loads the plugin options from the WordPress options repository or sets them to their default if absent.
 	*/
 	function load_options()
@@ -66,7 +106,7 @@ class mCatFilter
 		$this->storedVersion = get_option('mcatfilter_version');
 		
 		// Categories
-		$cats = explode(',', get_option('mcatfilter_categories'));
+		$cats = array_map('intval', explode(',', get_option('mcatfilter_categories')));
 		$this->categories = array_filter($cats, array(&$this, 'cat_value_filter'));
 	}
 	
@@ -190,7 +230,7 @@ class mCatFilter
 </thead>
 <tbody id="the-list" class="list:cat">
 <?php
-		$theCategories = get_categories();
+		$theCategories = get_categories('hide_empty=0');
 		
 		$alt = '';
 		foreach ($theCategories as $cat)
@@ -198,7 +238,7 @@ class mCatFilter
 			$alt = empty($alt) ? ' class="alternate"' : '';
 ?>
 <tr<?php echo $alt; ?>>
-<th scope="row" class="check-column"><input type="checkbox" name="select[]" value="<?php echo $cat->cat_ID; ?>" <?php if (in_array($cat->cat_ID, $this->categories)) echo 'checked '; ?>/></td>
+<th scope="row" class="check-column"><input type="checkbox" name="select[]" value="<?php echo $cat->cat_ID; ?>" <?php if ($this->is_excluded($cat->cat_ID)) echo 'checked '; ?>/></td>
 <td><?php if ($cat->category_parent != 0) echo '&#8212;  '; ?><strong><?php echo $cat->cat_name; ?></strong></td>
 <td><?php echo $cat->category_description; ?></td>
 <td><?php echo $cat->category_count; ?></td>
@@ -284,7 +324,7 @@ class mCatFilter
 			delete_option('mcatfilter_version');
 			add_option('mcatfilter_version', $this->version, 'mCatFilter plugin version', 'no');
 			delete_option('mcatfilter_categories');
-			add_option('mcatfilter_categories', 0, 'mCatFilter categories', 'no');
+			add_option('mcatfilter_categories', '', 'mCatFilter categories', 'no');
 			$this->confirmMessage = sprintf(__('%s has been successfully installed.', $this->productDomain), $this->productName);
 		}
 		
@@ -301,7 +341,6 @@ class mCatFilter
 				&& !empty($_POST['form_action']) && $_POST['form_action'] == 'upgrade')
 		{
 			update_option('mcatfilter_version', $this->version);
-			update_option('mcatfilter_categories', 0);
 			$this->confirmMessage = sprintf(__('%s has been successfully upgraded.', $this->productDomain), $this->productName);
 		}
 		// Specific functions
@@ -320,7 +359,9 @@ class mCatFilter
 		{
 			if (empty($_POST['select']))
 				$_POST['select'] = array();
-			$optionValue = implode(',', array_filter($_POST['select'], array(&$this, 'cat_value_filter')));
+			$selectedValues = array_map('intval', array_filter($_POST['select'], array(&$this, 'cat_value_filter')));
+			sort($selectedValues, SORT_NUMERIC);
+			$optionValue = implode(',', $selectedValues);
 			update_option('mcatfilter_categories', empty($optionValue) ? 0 : $optionValue);
 			$this->confirmMessage = __('The selected categories will now be excluded from standard post requests.', $this->productDomain);
 		}
@@ -334,6 +375,47 @@ class mCatFilter
 	
 		if (!empty($this->categories) && (is_home() || is_feed() || (is_archive() && !is_category())))
 			$wp_query->query_vars['cat'] = implode(',', array_map(create_function('$val', 'return "-{$val}";'), $this->categories)); 
+	}
+	
+	function update_on_category_removal($removed_cat_ID)
+	{
+		$this->remove_category($removed_cat_ID);
+	}
+	
+	function update_on_category_update($updated_cat_ID)
+	{	
+		if (!empty($_POST['action']) && preg_match('/^(add-?|edited)cat$/', $_POST['action']))
+		{
+			if (empty($_POST['mcatfilter_exclude']))
+				$this->remove_category($updated_cat_ID);
+			else
+				$this->add_category($updated_cat_ID);
+		}
+	}
+	
+	function category_form_controls()
+	{
+		global $cat_ID;
+	
+		$isChecked = (!empty($cat_ID) && $this->is_excluded($cat_ID)) ? 'checked' : '';
+		
+		if (version_compare($GLOBALS['wp_version'], '2.5', '<'))
+		{
+?>
+<table class="editform" cellpadding="5" cellspacing="2" width="100%">
+<?php		
+		}
+		else
+		{
+?>
+<table class="form-table">
+<?php	} ?>
+<tr class="form-field">
+<th scope="row"><?php _e('mCatFilter additional options', $this->productDomain); ?></th>
+<td><input type="checkbox" name="mcatfilter_exclude" id="mcatfilter_exclude" <?php echo $isChecked; ?> /> <label for="mcatfilter_exclude"><?php _e('Select this category for exclusion', $this->productDomain); ?></label></td>
+</tr>
+</table>
+<?php
 	}
 }
 

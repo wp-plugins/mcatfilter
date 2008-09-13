@@ -3,7 +3,7 @@ Contributors: chsxf
 Tags: category, exclude, filter, loop
 Requires at least: 2.1
 Tested up to: 2.6.2
-Stable tag: 0.1
+Stable tag: 0.2
 
 Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
 
@@ -17,6 +17,11 @@ mCatFilter for WordPress allows you to exclude categories from The Loop for disp
 * No theme manipulation required
 * Excluded categories are still available through custom queries 
 * Fully integrated with the WordPress internationalization API
+
+= Fixes and improvements of version 0.2 =
+
+* Excluded categories list is now cleaned up when removing a category
+* Integration with add/edit category forms
 
 = Upcoming additions and improvements =
 
@@ -53,7 +58,9 @@ By default, mCatFilter does not exclude any category. To select excluded categor
 1. Go to your Manage > mCatFilter page
 1. Check any category you want to exclude from the list
 1. Click "Select for Exclusion" button
-1. *You're done !* Selected categories should be excluded from default queries 
+1. *You're done !* Selected categories should be excluded from default queries
+
+From version 0.2, you can also select/deselect a category for exclusion from the edit category form.
 
 == Online Resources ==
 
