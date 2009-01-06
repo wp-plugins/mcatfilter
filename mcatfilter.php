@@ -2,10 +2,10 @@
 /*
 Plugin Name: mCatFilter
 Plugin URI: http://www.xhaleera.com/index.php/products/wordpress-mseries-plugins/mcatfilter/
-Description: Excludes selected categories from post requests
+Description: Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
 Author: Christophe SAUVEUR
 Author URI: http://www.xhaleera.com
-Version: 0.2
+Version: 0.3
 */
 
 // Loading mautopopup plugin text domain
@@ -17,19 +17,25 @@ load_plugin_textdomain('mcatfilter', 'wp-content/plugins/mcatfilter/l10n');
 */
 class mCatFilter
 {
-	var $minWPversion = '2.1';				//!< Minimum required WP version
+	var $minWPversion = '2.7';				//!< Minimum required WP version
 	var $productDomain = 'mcatfilter'; 		//!< Product domain name
 	var $productName;						//!< Product name
-	var $version = '0.2';					//!< Software version number
+	var $version = '0.3';					//!< Software version number
 	var $storedVersion;						//!< Installed version number if any
 	var $categories;						//!< Excluded categories list
 	
+	function mCatFilter()
+	{
+		$this->__construct();
+	}
+	
 	/** \brief Constructor
 	*/
-	function mCatFilter()
+	function __construct()
 	{
 		$this->productName = __('mCatFilter', $this->productDomain);
 	
+		$this->setup_plugin();
 		$this->load_options();
 		$this->compute_post();
 	
@@ -137,77 +143,7 @@ class mCatFilter
 ?>
 <div class="wrap">
 <h2><?php echo $this->productName; ?></h2>
-<p><?php
-	if (empty($this->storedVersion))
-		_e('No version installed.', $this->productDomain);
-	else
-		printf(__('Current version is %s.', $this->productDomain), $this->storedVersion);
-?></p>
 </div>
-<?php
-
-		// **
-		//	Install form
-		// **
-		if (empty($this->storedVersion) || $this->compare_versions() < 0)
-		{
-?>
-<div class="wrap">
-<h2><?php _e('Installation', $this->productDomain); ?></h2>
-<form name="<?php echo $this->productDomain; ?>_install" action="" method="post">
-<?php
-			if (empty($this->storedVersion))
-			{
-?>
-<p><?php printf(__('%s must be installed before any further use.', $this->productDomain), $this->productName); ?></p>
-<input type="hidden" name="form_name" value="<?php echo $this->productDomain; ?>_install" />
-<input type="hidden" name="form_action" value="install" />
-<p class="submit"><input type="submit" name="submit" value="<?php printf(__('Setup %s', $this->productDomain), $this->productName); ?>" /></p>
-<?php
-			}
-			else
-			{
-?>
-<p><?php printf(__('You are currently using %s version %s.', $this->productDomain), $this->productName, $this->version); ?><br>
-<?php printf(__('Yet, your database seems to match a more recent version of the plugin (version %s).', $this->productDomain), $this->storedVersion); ?><br>
-<br>
-<?php printf(__('You must reinstall %s before any further use or get back to a suitable version of the software.', $this->productDomain), $this->productName); ?><br> 
-<strong><?php _e('If you choose to reinstall the plugin, all formerly saved options will be lost.', $this->productDomain); ?></strong></p>
-<input type="hidden" name="form_name" value="<?php echo $this->productDomain; ?>_install" />
-<input type="hidden" name="form_action" value="downgrade" />
-<p class="submit"><input type="submit" name="submit" value="<?php printf(__('Reinstall %s', $this->productDomain), $this->productName); ?>" />
-</p>
-<?php		} ?>
-</form>
-</div>
-<?php
-			return;
-		}
-
-		// **
-		//	Upgrade form
-		// **
-		if ($this->compare_versions() > 0)
-		{
-?>
-<div class="wrap">
-<h2><?php _e('Upgrade', $this->productDomain); ?></h2>
-<form name="<?php echo $this->productDomain; ?>_upgrade" action="" method="post">
-<p><?php printf(__('Before now, you were using version %s of %s.', $this->productDomain), $this->storedVersion, $this->productName); ?><br>
-<?php printf(__('The new installed version is %s and your database must be upgraded before any further use.', $this->productDomain), $this->version); ?></p>
-<input type="hidden" name="form_name" value="<?php echo $this->productDomain; ?>_upgrade" />
-<input type="hidden" name="form_action" value="upgrade" />
-<p class="submit"><input type="submit" name="submit" value="<?php printf(__('Upgrade %s', $this->productDomain), $this->productName); ?>" /></p>
-</form>
-</div>
-<?php
-			return;
-		}
-
-		// **
-		//	Setup panel
-		// **
-?>
 <div class="wrap">
 <h2><?php _e('Global Setup', $this->productDomain); ?></h2>
 <form name="<?php echo $this->productDomain; ?>_global_setup" action="" method="post" id="global_setup_form">
@@ -251,23 +187,6 @@ class mCatFilter
 </form>
 </div>
 <?php
-
-		// **
-		//	Uninstall form
-		// **
-?>
-<div class="wrap"></div>
-<div class="wrap">
-<h2><?php _e('Uninstall', $this->productDomain); ?></h3>
-<form name="<?php echo $this->productDomain; ?>_uninstall" action="" method="post">
-<p><?php printf(__('Removing %s will erase all saved options.', $this->productDomain), $this->productName); ?><br>
-<strong><?php _e('This operation CANNOT be undone.', $this->productDomain); ?></strong></p>
-<input type="hidden" name="form_name" value="<?php echo $this->productDomain; ?>_uninstall" />
-<input type="hidden" name="form_action" value="uninstall" />
-<p class="submit"><input type="submit" name="submit" value="<?php printf(__('Uninstall %s', $this->productDomain), $this->productName); ?>" /></p>
-</form>
-</div>
-<?php
 	}
 	
 	/** \brief Compares version numbers between the actual software version and the installed one.
@@ -297,64 +216,6 @@ class mCatFilter
 	*/
 	function compute_post()
 	{
-		// Short circuit
-		if (count($_POST) == 0)
-			return;
-
-		// Checking access clearance
-		if (!current_user_can('manage_options'))
-		{
-			$this->errorMessage = __('Sorry, but you\'re not allowed to access this page.', $this->productDomain);
-			return;
-		}
-		
-		// Uninstalling ?
-		if (!empty($_POST['form_name']) && $_POST['form_name'] == 'mcatfilter_uninstall'
-				&& !empty($_POST['form_action']) && $_POST['form_action'] == 'uninstall')
-		{
-			delete_option('mcatfilter_version');
-			delete_option('mcatfilter_categories');
-			$this->confirmMessage = sprintf(__('%s has been successfully uninstalled.', $this->productDomain), $this->productName);
-		}
-		
-		// Installing
-		if (!empty($_POST['form_name']) && $_POST['form_name'] == 'mcatfilter_install'
-				&& !empty($_POST['form_action']) && $_POST['form_action'] == 'install')
-		{
-			delete_option('mcatfilter_version');
-			add_option('mcatfilter_version', $this->version, 'mCatFilter plugin version', 'no');
-			delete_option('mcatfilter_categories');
-			add_option('mcatfilter_categories', '', 'mCatFilter categories', 'no');
-			$this->confirmMessage = sprintf(__('%s has been successfully installed.', $this->productDomain), $this->productName);
-		}
-		
-		// Downgrading
-		if (!empty($_POST['form_name']) && $_POST['form_name'] == 'mcatfilter_install'
-				&& !empty($_POST['form_action']) && $_POST['form_action'] == 'downgrade')
-		{
-			update_option('mcatfilter_version', $this->version);
-			$this->confirmMessage = sprintf(__('%s has been successfully downgraded.', $this->productDomain), $this->productName);
-		}
-		
-		// Upgrading
-		if (!empty($_POST['form_name']) && $_POST['form_name'] == 'mcatfilter_upgrade'
-				&& !empty($_POST['form_action']) && $_POST['form_action'] == 'upgrade')
-		{
-			update_option('mcatfilter_version', $this->version);
-			$this->confirmMessage = sprintf(__('%s has been successfully upgraded.', $this->productDomain), $this->productName);
-		}
-		// Specific functions
-		$this->global_setup();
-		
-		// Reloading options after alteration
-		$this->load_options();
-	}
-	
-	/** \brief Compute global setup operations
-	*/
-	function global_setup()
-	{
-		// Global Setup
 		if (!empty($_POST['form_name']) && $_POST['form_name'] == $this->productDomain.'_global_setup')
 		{
 			if (empty($_POST['select']))
@@ -365,6 +226,14 @@ class mCatFilter
 			update_option('mcatfilter_categories', empty($optionValue) ? 0 : $optionValue);
 			$this->confirmMessage = __('The selected categories will now be excluded from standard post requests.', $this->productDomain);
 		}
+		
+		$this->load_options();
+	}
+	
+	function setup_plugin()
+	{
+		add_option('mcatfilter_version', $this->version, 'mCatFilter Version', 'no');
+		add_option('mcatfilter_categories', 0, 'mCatFilter Filtered categories list', 'no');
 	}
 	
 	/** \brief Category filter
@@ -398,18 +267,8 @@ class mCatFilter
 		global $cat_ID;
 	
 		$isChecked = (!empty($cat_ID) && $this->is_excluded($cat_ID)) ? 'checked' : '';
-		
-		if (version_compare($GLOBALS['wp_version'], '2.5', '<'))
-		{
-?>
-<table class="editform" cellpadding="5" cellspacing="2" width="100%">
-<?php		
-		}
-		else
-		{
 ?>
 <table class="form-table">
-<?php	} ?>
 <tr class="form-field">
 <th scope="row"><?php _e('mCatFilter additional options', $this->productDomain); ?></th>
 <td><input type="checkbox" name="mcatfilter_exclude" id="mcatfilter_exclude" <?php echo $isChecked; ?> /> <label for="mcatfilter_exclude"><?php _e('Select this category for exclusion', $this->productDomain); ?></label></td>
@@ -421,11 +280,26 @@ class mCatFilter
 
 /** \brief Plugin launch function
 */
-function mCatFilter_launch()
+if (!function_exists('mCatFilter_launch'))
 {
-	$GLOBALS['__mCatFilter'] = new mCatFilter();
+	function mCatFilter_launch()
+	{
+		$GLOBALS['__mCatFilter'] = new mCatFilter();
+	}
+	
+	// Loading plugin after all have been loaded
+	add_action('plugins_loaded', 'mCatFilter_launch');
 }
 
-// Loading plugin after all have been loaded
-add_action('plugins_loaded', 'mCatFilter_launch');
+// Uninstalling plugin
+if (!function_exists('mCatFilter_uninstall'))
+{
+	function mCatFilter_uninstall()
+	{
+		delete_option('mcatfilter_version');
+		delete_option('mcatfilter_categories');
+	}
+	
+	register_uninstall_hook(__FILE__, 'mCatFilter_uninstall');
+}
 ?>

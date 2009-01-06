@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mCatFilter 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-13 13:25+0100\n"
-"PO-Revision-Date: 2008-09-13 13:25+0100\n"
+"POT-Creation-Date: 2009-01-06 09:03+0100\n"
+"PO-Revision-Date: 2009-01-06 09:03+0100\n"
 "Last-Translator: Christophe SAUVEUR <christophe@xhaleera.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,161 +14,53 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../mcatfilter.php:31
+#: ../mcatfilter.php:36
 msgid "mCatFilter"
 msgstr ""
 
-#: ../mcatfilter.php:54
+#: ../mcatfilter.php:60
 #, php-format
 msgid "%s Options"
 msgstr ""
 
-#: ../mcatfilter.php:122
+#: ../mcatfilter.php:128
 msgid "Unsupported WordPress version"
 msgstr ""
 
-#: ../mcatfilter.php:123
+#: ../mcatfilter.php:129
 #, php-format
 msgid "This plugin requires WordPress %s or later version."
 msgstr ""
 
-#: ../mcatfilter.php:142
-msgid "No version installed."
-msgstr ""
-
-#: ../mcatfilter.php:144
-#, php-format
-msgid "Current version is %s."
-msgstr ""
-
-#: ../mcatfilter.php:156
-msgid "Installation"
-msgstr ""
-
-#: ../mcatfilter.php:162
-#, php-format
-msgid "%s must be installed before any further use."
-msgstr ""
-
-#: ../mcatfilter.php:165
-#, php-format
-msgid "Setup %s"
-msgstr ""
-
-#: ../mcatfilter.php:171
-#, php-format
-msgid "You are currently using %s version %s."
-msgstr ""
-
-#: ../mcatfilter.php:172
-#, php-format
-msgid "Yet, your database seems to match a more recent version of the plugin (version %s)."
-msgstr ""
-
-#: ../mcatfilter.php:174
-#, php-format
-msgid "You must reinstall %s before any further use or get back to a suitable version of the software."
-msgstr ""
-
-#: ../mcatfilter.php:175
-msgid "If you choose to reinstall the plugin, all formerly saved options will be lost."
-msgstr ""
-
-#: ../mcatfilter.php:178
-#, php-format
-msgid "Reinstall %s"
-msgstr ""
-
-#: ../mcatfilter.php:194
-msgid "Upgrade"
-msgstr ""
-
-#: ../mcatfilter.php:196
-#, php-format
-msgid "Before now, you were using version %s of %s."
-msgstr ""
-
-#: ../mcatfilter.php:197
-#, php-format
-msgid "The new installed version is %s and your database must be upgraded before any further use."
-msgstr ""
-
-#: ../mcatfilter.php:200
-#, php-format
-msgid "Upgrade %s"
-msgstr ""
-
-#: ../mcatfilter.php:212
+#: ../mcatfilter.php:148
 msgid "Global Setup"
 msgstr ""
 
-#: ../mcatfilter.php:217
+#: ../mcatfilter.php:153
 msgid "Select for exclusion"
 msgstr ""
 
-#: ../mcatfilter.php:226
+#: ../mcatfilter.php:162
 msgid "Name"
 msgstr ""
 
-#: ../mcatfilter.php:227
+#: ../mcatfilter.php:163
 msgid "Description"
 msgstr ""
 
-#: ../mcatfilter.php:228
+#: ../mcatfilter.php:164
 msgid "Posts"
 msgstr ""
 
-#: ../mcatfilter.php:261
-msgid "Uninstall"
-msgstr ""
-
-#: ../mcatfilter.php:263
-#, php-format
-msgid "Removing %s will erase all saved options."
-msgstr ""
-
-#: ../mcatfilter.php:264
-msgid "This operation CANNOT be undone."
-msgstr ""
-
-#: ../mcatfilter.php:267
-#, php-format
-msgid "Uninstall %s"
-msgstr ""
-
-#: ../mcatfilter.php:307
-msgid "Sorry, but you're not allowed to access this page."
-msgstr ""
-
-#: ../mcatfilter.php:317
-#, php-format
-msgid "%s has been successfully uninstalled."
-msgstr ""
-
-#: ../mcatfilter.php:328
-#, php-format
-msgid "%s has been successfully installed."
-msgstr ""
-
-#: ../mcatfilter.php:336
-#, php-format
-msgid "%s has been successfully downgraded."
-msgstr ""
-
-#: ../mcatfilter.php:344
-#, php-format
-msgid "%s has been successfully upgraded."
-msgstr ""
-
-#: ../mcatfilter.php:366
+#: ../mcatfilter.php:227
 msgid "The selected categories will now be excluded from standard post requests."
 msgstr ""
 
-#: ../mcatfilter.php:414
+#: ../mcatfilter.php:273
 msgid "mCatFilter additional options"
 msgstr ""
 
-#: ../mcatfilter.php:415
+#: ../mcatfilter.php:274
 msgid "Select this category for exclusion"
 msgstr ""
 
