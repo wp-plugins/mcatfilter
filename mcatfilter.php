@@ -5,7 +5,7 @@ Plugin URI: http://www.xhaleera.com/index.php/products/wordpress-mseries-plugins
 Description: Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
 Author: Christophe SAUVEUR
 Author URI: http://www.xhaleera.com
-Version: 0.3
+Version: 0.3.1
 */
 
 // Loading mautopopup plugin text domain
@@ -17,10 +17,10 @@ load_plugin_textdomain('mcatfilter', 'wp-content/plugins/mcatfilter/l10n');
 */
 class mCatFilter
 {
-	var $minWPversion = '2.7';				//!< Minimum required WP version
+	var $minWPversion = '2.1';				//!< Minimum required WP version
 	var $productDomain = 'mcatfilter'; 		//!< Product domain name
 	var $productName;						//!< Product name
-	var $version = '0.3';					//!< Software version number
+	var $version = '0.3.1';					//!< Software version number
 	var $storedVersion;						//!< Installed version number if any
 	var $categories;						//!< Excluded categories list
 	
@@ -49,6 +49,7 @@ class mCatFilter
 			add_action('add_category', array(&$this, 'update_on_category_update'));
 			add_action('edit_category', array(&$this, 'update_on_category_update'));
 			add_action('edit_category_form', array(&$this, 'category_form_controls'));
+			add_filter('plugin_action_links', array(&$this, 'plugin_action_links_filter'), 10, 2);
 		}
 	}
 
@@ -232,18 +233,21 @@ class mCatFilter
 	
 	function setup_plugin()
 	{
-		add_option('mcatfilter_version', $this->version, 'mCatFilter Version', 'no');
-		add_option('mcatfilter_categories', 0, 'mCatFilter Filtered categories list', 'no');
+		if (get_option('mcatfilter_version') === false)
+		{
+			add_option('mcatfilter_version', $this->version, 'mCatFilter Version', 'no');
+			add_option('mcatfilter_categories', 0, 'mCatFilter Filtered categories list', 'no');
+		}
+		else
+			update_option('mcatfilter_version', $this->version);
 	}
 	
 	/** \brief Category filter
 	*/
-	function filter_categories()
+	function filter_categories($wp_query)
 	{
-		global $wp_query;
-	
 		if (!empty($this->categories) && (is_home() || is_feed() || (is_archive() && !is_category())))
-			$wp_query->query_vars['cat'] = implode(',', array_map(create_function('$val', 'return "-{$val}";'), $this->categories)); 
+			$wp_query->query_vars['cat'] = implode(',', array_map(create_function('$val', 'return "-{$val}";'), $this->categories));
 	}
 	
 	function update_on_category_removal($removed_cat_ID)
@@ -267,14 +271,37 @@ class mCatFilter
 		global $cat_ID;
 	
 		$isChecked = (!empty($cat_ID) && $this->is_excluded($cat_ID)) ? 'checked' : '';
+		
+		if (version_compare($GLOBALS['wp_version'], '2.7', '<'))
+		{
 ?>
-<table class="form-table">
+<table class="form-table editform">
 <tr class="form-field">
 <th scope="row"><?php _e('mCatFilter additional options', $this->productDomain); ?></th>
 <td><input type="checkbox" name="mcatfilter_exclude" id="mcatfilter_exclude" <?php echo $isChecked; ?> /> <label for="mcatfilter_exclude"><?php _e('Select this category for exclusion', $this->productDomain); ?></label></td>
 </tr>
 </table>
 <?php
+		}
+		else
+		{
+?>
+<h3><?php _e('mCatFilter additional options', $this->productDomain); ?></h3>
+<table class="form-table"><tbody><tr><td><fieldset><label for="mcatfilter_exclude"><input type="checkbox" name="mcatfilter_exclude" id="mcatfilter_exclude" <?php echo $isChecked; ?> /> <?php _e('Select this category for exclusion', $this->productDomain); ?></label></fieldset></td></tr></tbody></table></div>
+<?php
+		}
+	}
+	
+	function plugin_action_links_filter($links, $plugin)
+	{
+		static $this_plugin;
+		if (!$this_plugin)
+			$this_plugin = plugin_basename(__FILE__);
+			
+		if ($plugin == $this_plugin)
+			$links = array_merge(array('<a href="tools.php?page=mcatfilter">'.__('Setup', $this->productDomain).'</a>'), $links);
+		
+		return $links;
 	}
 }
 
@@ -291,8 +318,8 @@ if (!function_exists('mCatFilter_launch'))
 	add_action('plugins_loaded', 'mCatFilter_launch');
 }
 
-// Uninstalling plugin
-if (!function_exists('mCatFilter_uninstall'))
+// Uninstalling plugin - WP 2.7+
+if (function_exists('register_uninstall_hook') && !function_exists('mCatFilter_uninstall'))
 {
 	function mCatFilter_uninstall()
 	{

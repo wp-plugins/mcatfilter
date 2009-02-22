@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: chsxf
-Tags: category, exclude, filter, loop
-Requires at least: 2.7
+Tags: mcatfilter, category, exclude, filter, loop
+Requires at least: 2.1
 Tested up to: 2.7.1
-Stable tag: 0.3
+Stable tag: 0.3.1
 
 Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
 
@@ -18,10 +18,11 @@ mCatFilter for WordPress allows you to exclude categories from The Loop for disp
 * Excluded categories are still available through custom queries 
 * Fully integrated with the WordPress internationalization API
 
-= Fixes and improvements of version 0.3 =
+= Fixes and improvements of version 0.3.1 =
 
-* Updated for WordPress 2.7
-* Removed builtin install/uninstall forms and replaced them by WordPress 2.7 uninstall hook
+* Fixed important bug that prevented the plugin to work when upgrading from a previous version
+* Improved compatibility back to WordPress 2.1
+* Added "Setup" link in the Installed Extension panel
 
 = Upcoming additions and improvements =
 
@@ -30,7 +31,7 @@ mCatFilter for WordPress allows you to exclude categories from The Loop for disp
 = System requirements =
 
 * PHP version **4.3.0** or higher
-* WordPress 2.7+
+* WordPress 2.1+
 
 == Installation ==
 

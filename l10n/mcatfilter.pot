@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mCatFilter 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-06 09:03+0100\n"
-"PO-Revision-Date: 2009-01-06 09:03+0100\n"
+"POT-Creation-Date: 2009-02-22 12:57+0100\n"
+"PO-Revision-Date: 2009-02-22 12:57+0100\n"
 "Last-Translator: Christophe SAUVEUR <christophe@xhaleera.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,49 +18,55 @@ msgstr ""
 msgid "mCatFilter"
 msgstr ""
 
-#: ../mcatfilter.php:60
+#: ../mcatfilter.php:61
 #, php-format
 msgid "%s Options"
 msgstr ""
 
-#: ../mcatfilter.php:128
+#: ../mcatfilter.php:129
 msgid "Unsupported WordPress version"
 msgstr ""
 
-#: ../mcatfilter.php:129
+#: ../mcatfilter.php:130
 #, php-format
 msgid "This plugin requires WordPress %s or later version."
 msgstr ""
 
-#: ../mcatfilter.php:148
+#: ../mcatfilter.php:149
 msgid "Global Setup"
 msgstr ""
 
-#: ../mcatfilter.php:153
+#: ../mcatfilter.php:154
 msgid "Select for exclusion"
 msgstr ""
 
-#: ../mcatfilter.php:162
+#: ../mcatfilter.php:163
 msgid "Name"
 msgstr ""
 
-#: ../mcatfilter.php:163
+#: ../mcatfilter.php:164
 msgid "Description"
 msgstr ""
 
-#: ../mcatfilter.php:164
+#: ../mcatfilter.php:165
 msgid "Posts"
 msgstr ""
 
-#: ../mcatfilter.php:227
+#: ../mcatfilter.php:228
 msgid "The selected categories will now be excluded from standard post requests."
 msgstr ""
 
-#: ../mcatfilter.php:273
+#: ../mcatfilter.php:280
+#: ../mcatfilter.php:289
 msgid "mCatFilter additional options"
 msgstr ""
 
-#: ../mcatfilter.php:274
+#: ../mcatfilter.php:281
+#: ../mcatfilter.php:290
 msgid "Select this category for exclusion"
+msgstr ""
+
+#: ../mcatfilter.php:302
+msgid "Setup"
 msgstr ""
 
