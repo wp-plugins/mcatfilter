@@ -3,13 +3,13 @@ Contributors: chsxf
 Tags: mcatfilter, category, exclude, filter, loop
 Requires at least: 2.1
 Tested up to: 2.7.1
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 
-Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
+Excludes categories from The Loop for display on the home page, in feeds and some archive pages (except from tag and category pages).
 
 == Description ==
 
-mCatFilter for WordPress allows you to exclude categories from The Loop for display on the home page, in feeds and in archive pages.
+mCatFilter for WordPress allows you to exclude categories from The Loop for display on the home page, in feeds and some archive pages (except from tag and category pages).
 
 = Key features =
 
@@ -18,11 +18,9 @@ mCatFilter for WordPress allows you to exclude categories from The Loop for disp
 * Excluded categories are still available through custom queries 
 * Fully integrated with the WordPress internationalization API
 
-= Fixes and improvements of version 0.3.1 =
+= Fixes and improvements of version 0.3.2 =
 
-* Fixed important bug that prevented the plugin to work when upgrading from a previous version
-* Improved compatibility back to WordPress 2.1
-* Added "Setup" link in the Installed Extension panel
+* Don't exclude posts from tag pages anymore.
 
 = Upcoming additions and improvements =
 
