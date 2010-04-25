@@ -5,7 +5,7 @@ Plugin URI: http://www.xhaleera.com/index.php/products/wordpress-mseries-plugins
 Description: Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
 Author: Christophe SAUVEUR
 Author URI: http://www.xhaleera.com
-Version: 0.3.2
+Version: 0.4
 */
 
 // Loading mautopopup plugin text domain
@@ -20,9 +20,9 @@ class mCatFilter
 	var $minWPversion = '2.1';				//!< Minimum required WP version
 	var $productDomain = 'mcatfilter'; 		//!< Product domain name
 	var $productName;						//!< Product name
-	var $version = '0.3.2';					//!< Software version number
-	var $storedVersion;						//!< Installed version number if any
+	var $version = '0.4';					//!< Software version number
 	var $categories;						//!< Excluded categories list
+	var $do_not_exclude_from_tag_pages;		//!< Not excluded from tag pages flag
 	
 	function mCatFilter()
 	{
@@ -34,7 +34,7 @@ class mCatFilter
 	function __construct()
 	{
 		$this->productName = __('mCatFilter', $this->productDomain);
-	
+		
 		$this->setup_plugin();
 		$this->load_options();
 		$this->compute_post();
@@ -57,8 +57,7 @@ class mCatFilter
 	*/
 	function create_admin_page()
 	{
-		if (current_user_can('manage_options'))
-			add_management_page(sprintf(__('%s Options', $this->productDomain), $this->productName), $this->productName, 'manage_options', $this->productDomain, array(&$this, 'options_page'));
+		add_menu_page($this->productName, $this->productName, 'manage_options', $this->productDomain, array(&$this, 'options_page'));
 	}
 
 	/** \brief Tells if the installation of the plugin has been correctly done.
@@ -66,7 +65,7 @@ class mCatFilter
 	*/
 	function installation_complete()
 	{
-		return ($this->compare_versions() == 0);
+		return (version_compare($this->version, get_option('mcatfilter_version')) == 0);
 	}
 	
 	function cat_value_filter($value)
@@ -88,7 +87,7 @@ class mCatFilter
 		if ($this->is_excluded($cat_ID))
 		{
 			$this->categories = array_diff($this->categories, array($cat_ID));
-			update_option('mcatfilter_categories', implode(',', $this->categories));
+			$this->save_options();
 		}
 	}
 	
@@ -102,7 +101,7 @@ class mCatFilter
 		{
 			$this->categories[] = $cat_ID;
 			sort($this->categories, SORT_NUMERIC);
-			update_option('mcatfilter_categories', implode(',', $this->categories));
+			$this->save_options();
 		}
 	}
 	
@@ -110,11 +109,16 @@ class mCatFilter
 	*/
 	function load_options()
 	{
-		$this->storedVersion = get_option('mcatfilter_version');
+		$options = unserialize(get_option('mcatfilter_options'));
 		
-		// Categories
-		$cats = array_map('intval', explode(',', get_option('mcatfilter_categories')));
-		$this->categories = array_filter($cats, array(&$this, 'cat_value_filter'));
+		$this->categories = $options->categories;
+		$this->do_not_exclude_from_tag_pages = $options->do_not_exclude_from_tag_pages;
+	}
+	
+	function save_options() {
+		$options = (object) array('do_not_exclude_from_tag_pages' => $this->do_not_exclude_from_tag_pages,
+								  'categories' => $this->categories);
+		update_option('mcatfilter_options', serialize($options));
 	}
 	
 	function options_page()
@@ -144,17 +148,15 @@ class mCatFilter
 ?>
 <div class="wrap">
 <h2><?php echo $this->productName; ?></h2>
-</div>
-<div class="wrap">
-<h2><?php _e('Global Setup', $this->productDomain); ?></h2>
 <form name="<?php echo $this->productDomain; ?>_global_setup" action="" method="post" id="global_setup_form">
 <input type="hidden" name="form_name" value="<?php echo $this->productDomain; ?>_global_setup" />
-<div class="tablenav">
-<div class="alignleft">
-<input type="submit" value="<?php _e('Select for exclusion', $this->productDomain); ?>" name="deleteit" class="button-secondary delete" />
-</div>
-<br class="clear" />
-</div>
+<table class="form-table">
+<tr>
+<th scope="row" nowrap="nowrap"><label for="do_not_tag_exclude"><?php _e('Do not exclude from tag pages', $this->productDomain); ?></label></th>
+<td><input type="checkbox" name="do_not_tag_exclude" id="do_not_tag_exclude" <?php if ($this->do_not_exclude_from_tag_pages) echo 'checked="checked"'; ?>/></td>
+</tr>
+</table>
+<h3><?php _e('Select for exclusion', $this->productDomain); ?></h3>
 <br class="clear" />
 <table class="widefat">
 <thead>
@@ -185,22 +187,15 @@ class mCatFilter
 ?>
 </tbody>
 </table>
+<div class="tablenav">
+<div class="alignleft">
+<input type="submit" value="<?php _e('Save changes', $this->productDomain); ?>" name="deleteit" class="button-secondary delete" />
+</div>
+<br class="clear" />
+</div>
 </form>
 </div>
 <?php
-	}
-	
-	/** \brief Compares version numbers between the actual software version and the installed one.
-		\return a value < 0 if the installed version is out-of-date, > 0 if the installed version is more recent or 0 if both version numbers are matching together.
-	*/
-	function compare_versions()
-	{
-		// Checking values
-		$ra = preg_match('/^(?:[0-9]+(?:RC|pl|a|alpha|b|beta)?(?:[1-9][0-9]*)?\.?)+$/', $this->version);
-		$rb = preg_match('/^(?:[0-9]+(?:RC|pl|a|alpha|b|beta)?(?:[1-9][0-9]*)?\.?)+$/', $this->storedVersion);
-		if ($ra == 0 || $rb == 0)
-			return $ra - $rb;
-		return version_compare($this->version, $this->storedVersion);
 	}
 	
 	/** \brief Displays well-formatted error and confirmation messages using default WordPress admin style sheet.
@@ -221,11 +216,13 @@ class mCatFilter
 		{
 			if (empty($_POST['select']))
 				$_POST['select'] = array();
-			$selectedValues = array_map('intval', array_filter($_POST['select'], array(&$this, 'cat_value_filter')));
-			sort($selectedValues, SORT_NUMERIC);
-			$optionValue = implode(',', $selectedValues);
-			update_option('mcatfilter_categories', empty($optionValue) ? 0 : $optionValue);
-			$this->confirmMessage = __('The selected categories will now be excluded from standard post requests.', $this->productDomain);
+			$this->categories = array_map('intval', array_filter($_POST['select'], array(&$this, 'cat_value_filter')));
+			sort($this->categories, SORT_NUMERIC);
+			
+			$this->do_not_exclude_from_tag_pages = isset($_POST['do_not_tag_exclude']);
+			
+			$this->save_options();
+			$this->confirmMessage = __('Chages have been succesfully saved.', $this->productDomain);
 		}
 		
 		$this->load_options();
@@ -233,20 +230,42 @@ class mCatFilter
 	
 	function setup_plugin()
 	{
-		if (get_option('mcatfilter_version') === false)
+		$installed_version = get_option('mcatfilter_version');
+		
+		if ($installed_version === false)
 		{
-			add_option('mcatfilter_version', $this->version, 'mCatFilter Version', 'no');
-			add_option('mcatfilter_categories', 0, 'mCatFilter Filtered categories list', 'no');
-		}
-		else
 			update_option('mcatfilter_version', $this->version);
+			
+			$obj = (object) array('do_not_exclude_from_tag_pages' => true, 'categories' => array());
+			update_option('mcatfilter_options', serialize($obj));
+		}
+		else if (version_compare($installed_version, $this->version) < 0)
+		{
+			$categories = get_option('mcatfilter_categories');
+			$obj = (object) NULL;
+			if (!empty($categories))
+			{
+				$categories = array_map('intval', explode(',', $categories));
+				$categories = array_filter($categories, array(&$this, 'cat_value_filter'));
+				$obj->categories = $categories;
+			}
+			else
+				$obj->categories = array();
+			$obj->do_not_exclude_from_tag_pages = true;
+						
+			delete_option('mcatfilter_categories');
+			update_option('mcatfilter_options', serialize($obj));
+			update_option('mcatfilter_version', $this->version);
+		}
 	}
 	
 	/** \brief Category filter
 	*/
 	function filter_categories($wp_query)
 	{
-		if (!empty($this->categories) && (is_home() || is_feed() || (is_archive() && !is_category() && !is_tag())))
+		if ($this->do_not_exclude_from_tag_pages && is_tag())
+			return;
+		if (!empty($this->categories) && (is_home() || is_feed() || (is_archive() && !is_category())))
 			$wp_query->query_vars['cat'] = implode(',', array_map(create_function('$val', 'return "-{$val}";'), $this->categories));
 	}
 	
@@ -299,7 +318,7 @@ class mCatFilter
 			$this_plugin = plugin_basename(__FILE__);
 			
 		if ($plugin == $this_plugin)
-			$links = array_merge(array('<a href="tools.php?page=mcatfilter">'.__('Setup', $this->productDomain).'</a>'), $links);
+			$links = array_merge(array('<a href="admin.php?page=mcatfilter">'.__('Setup', $this->productDomain).'</a>'), $links);
 		
 		return $links;
 	}
@@ -324,7 +343,7 @@ if (function_exists('register_uninstall_hook') && !function_exists('mCatFilter_u
 	function mCatFilter_uninstall()
 	{
 		delete_option('mcatfilter_version');
-		delete_option('mcatfilter_categories');
+		delete_option('mcatfilter_options');
 	}
 	
 	register_uninstall_hook(__FILE__, 'mCatFilter_uninstall');
