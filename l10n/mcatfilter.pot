@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mCatFilter 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-25 13:11+0100\n"
-"PO-Revision-Date: 2010-04-25 13:12+0100\n"
+"POT-Creation-Date: 2010-05-13 21:22+0100\n"
+"PO-Revision-Date: 2010-05-13 21:22+0100\n"
 "Last-Translator: Christophe SAUVEUR <christophe@xhaleera.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,58 +14,106 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../mcatfilter.php:36
+#: ../mcatfilter.php:37
 msgid "mCatFilter"
 msgstr ""
 
-#: ../mcatfilter.php:133
+#: ../mcatfilter.php:151
 msgid "Unsupported WordPress version"
 msgstr ""
 
-#: ../mcatfilter.php:134
+#: ../mcatfilter.php:152
 #, php-format
 msgid "This plugin requires WordPress %s or later version."
 msgstr ""
 
-#: ../mcatfilter.php:155
+#: ../mcatfilter.php:173
 msgid "Do not exclude from tag pages"
 msgstr ""
 
-#: ../mcatfilter.php:159
+#: ../mcatfilter.php:177
+msgid "Do not exclude from feeds"
+msgstr ""
+
+#: ../mcatfilter.php:181
 msgid "Select for exclusion"
 msgstr ""
 
-#: ../mcatfilter.php:165
+#: ../mcatfilter.php:187
 msgid "Name"
 msgstr ""
 
-#: ../mcatfilter.php:166
+#: ../mcatfilter.php:188
 msgid "Description"
 msgstr ""
 
-#: ../mcatfilter.php:167
+#: ../mcatfilter.php:189
 msgid "Posts"
 msgstr ""
 
-#: ../mcatfilter.php:192
+#: ../mcatfilter.php:204
+msgid "Don't exclude anymore"
+msgstr ""
+
+#: ../mcatfilter.php:204
+msgid "Exclude"
+msgstr ""
+
+#: ../mcatfilter.php:205
+msgid "Specific exclusions"
+msgstr ""
+
+#: ../mcatfilter.php:208
+msgid "All"
+msgstr ""
+
+#: ../mcatfilter.php:210
+msgid "Home page"
+msgstr ""
+
+#: ../mcatfilter.php:211
+msgid "Search results"
+msgstr ""
+
+#: ../mcatfilter.php:212
+msgid "Feeds"
+msgstr ""
+
+#: ../mcatfilter.php:214
+msgid "Tag archive pages"
+msgstr ""
+
+#: ../mcatfilter.php:215
+msgid "Author archive pages"
+msgstr ""
+
+#: ../mcatfilter.php:216
+msgid "Date archive pages"
+msgstr ""
+
+#: ../mcatfilter.php:217
+msgid "Exclude only from :"
+msgstr ""
+
+#: ../mcatfilter.php:244
 msgid "Save changes"
 msgstr ""
 
-#: ../mcatfilter.php:225
+#: ../mcatfilter.php:341
 msgid "Chages have been succesfully saved."
 msgstr ""
 
-#: ../mcatfilter.php:299
-#: ../mcatfilter.php:308
+#: ../mcatfilter.php:432
+#: ../mcatfilter.php:441
 msgid "mCatFilter additional options"
 msgstr ""
 
-#: ../mcatfilter.php:300
-#: ../mcatfilter.php:309
+#: ../mcatfilter.php:433
+#: ../mcatfilter.php:442
 msgid "Select this category for exclusion"
 msgstr ""
 
-#: ../mcatfilter.php:321
+#: ../mcatfilter.php:454
 msgid "Setup"
 msgstr ""
 

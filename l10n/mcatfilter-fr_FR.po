@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mCatFilter 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-25 13:12+0100\n"
-"PO-Revision-Date: 2010-04-25 13:13+0100\n"
+"POT-Creation-Date: 2010-05-13 21:17+0100\n"
+"PO-Revision-Date: 2010-05-13 21:18+0100\n"
 "Last-Translator: Christophe SAUVEUR <christophe@xhaleera.com>\n"
 "Language-Team: Xhaleera <contact@xhaleera.com>\n"
 "MIME-Version: 1.0\n"
@@ -16,58 +16,106 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../mcatfilter.php:36
+#: ../mcatfilter.php:37
 msgid "mCatFilter"
 msgstr "mCatFilter"
 
-#: ../mcatfilter.php:133
+#: ../mcatfilter.php:151
 msgid "Unsupported WordPress version"
 msgstr "Version de WordPress non supportée"
 
-#: ../mcatfilter.php:134
+#: ../mcatfilter.php:152
 #, php-format
 msgid "This plugin requires WordPress %s or later version."
 msgstr "Cette extension requiert WordPress %s ou une version ultérieure."
 
-#: ../mcatfilter.php:155
+#: ../mcatfilter.php:173
 msgid "Do not exclude from tag pages"
 msgstr "Ne pas exclure des pages de Mots-clefs"
 
-#: ../mcatfilter.php:159
+#: ../mcatfilter.php:177
+msgid "Do not exclude from feeds"
+msgstr "Ne pas exclure des flux"
+
+#: ../mcatfilter.php:181
 msgid "Select for exclusion"
 msgstr "Sélectionner pour l'exclusion"
 
-#: ../mcatfilter.php:165
+#: ../mcatfilter.php:187
 msgid "Name"
 msgstr "Nom"
 
-#: ../mcatfilter.php:166
+#: ../mcatfilter.php:188
 msgid "Description"
 msgstr "Description"
 
-#: ../mcatfilter.php:167
+#: ../mcatfilter.php:189
 msgid "Posts"
 msgstr "Articles"
 
-#: ../mcatfilter.php:192
+#: ../mcatfilter.php:204
+msgid "Don't exclude anymore"
+msgstr "Ne plus exclure"
+
+#: ../mcatfilter.php:204
+msgid "Exclude"
+msgstr "Exclure"
+
+#: ../mcatfilter.php:205
+msgid "Specific exclusions"
+msgstr "Exclusions spécifiques"
+
+#: ../mcatfilter.php:208
+msgid "All"
+msgstr "Tout"
+
+#: ../mcatfilter.php:210
+msgid "Home page"
+msgstr "Page d'accueil"
+
+#: ../mcatfilter.php:211
+msgid "Search results"
+msgstr "Résultats de recherche"
+
+#: ../mcatfilter.php:212
+msgid "Feeds"
+msgstr "Flux"
+
+#: ../mcatfilter.php:214
+msgid "Tag archive pages"
+msgstr "Pages d'archive de mot-clé"
+
+#: ../mcatfilter.php:215
+msgid "Author archive pages"
+msgstr "Pages d'archive d'auteur"
+
+#: ../mcatfilter.php:216
+msgid "Date archive pages"
+msgstr "Pages d'archive par date"
+
+#: ../mcatfilter.php:217
+msgid "Exclude only from :"
+msgstr "Exclure uniquement de :"
+
+#: ../mcatfilter.php:244
 msgid "Save changes"
 msgstr "Sauvegarder les modifications"
 
-#: ../mcatfilter.php:225
+#: ../mcatfilter.php:341
 msgid "Chages have been succesfully saved."
 msgstr "Les modifications ont été sauvegardées avec succès."
 
-#: ../mcatfilter.php:299
-#: ../mcatfilter.php:308
+#: ../mcatfilter.php:432
+#: ../mcatfilter.php:441
 msgid "mCatFilter additional options"
 msgstr "Options additionnelles de mCatFilter"
 
-#: ../mcatfilter.php:300
-#: ../mcatfilter.php:309
+#: ../mcatfilter.php:433
+#: ../mcatfilter.php:442
 msgid "Select this category for exclusion"
 msgstr "Sélectionner cette catégorie pour l'exclusion"
 
-#: ../mcatfilter.php:321
+#: ../mcatfilter.php:454
 msgid "Setup"
 msgstr "Configuration"
 
