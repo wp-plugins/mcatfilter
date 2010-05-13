@@ -397,7 +397,9 @@ jQuery(function() {
 	function filter_categories($wp_query)
 	{
 		// Global flags
-		if (empty($this->categories) || ($this->do_not_exclude_from_tag_pages && is_tag()) || ($this->do_not_exclude_from_feeds && is_feed()))
+		if (empty($this->categories) || is_category()
+				|| ($this->do_not_exclude_from_tag_pages && is_tag())
+				|| ($this->do_not_exclude_from_feeds && is_feed()))
 			return;
 		
 		// Specific exclusions
