@@ -3,7 +3,7 @@ Contributors: chsxf
 Tags: mcatfilter, category, exclude, filter, loop
 Requires at least: 2.1
 Tested up to: 2.9.2
-Stable tag: 0.4.1
+Stable tag: 0.4.2
 
 Excludes categories from The Loop for display on the home page, in feeds and some archive pages.
 
@@ -18,10 +18,9 @@ mCatFilter for WordPress allows you to exclude categories from The Loop for disp
 * Excluded categories are still available through custom queries 
 * Fully integrated with the WordPress internationalization API
 
-= Fixes and improvements of version 0.4.1 =
+= Fixes and improvements of version 0.4.2 =
 
-* New option for global exclusion/inclusion in feeds.
-* Ability to select filter extent (i.e. home page only, search page, etc...)
+* Fixes a display bug when saving options
 
 = Upcoming additions and improvements =
 
@@ -72,4 +71,4 @@ None at this time
 
 == License ==
 mCatFilter, as WordPress, is released under the terms of the GNU GPL v2 (see license.txt).
-Permission to use, copy, modify, and distribute this software and its documentation under the terms of the GNU General Public License is hereby granted. No representations are made about the suitability of this software for any purpose. It is provided “as is” without express or implied warranty.
+Permission to use, copy, modify, and distribute this software and its documentation under the terms of the GNU General Public License is hereby granted. No representations are made about the suitability of this software for any purpose. It is provided ï¿½as isï¿½ without express or implied warranty.

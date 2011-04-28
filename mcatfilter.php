@@ -5,7 +5,7 @@ Plugin URI: http://www.xhaleera.com/index.php/products/wordpress-mseries-plugins
 Description: Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
 Author: Christophe SAUVEUR
 Author URI: http://www.xhaleera.com
-Version: 0.4.1
+Version: 0.4.2
 */
 
 // Loading mautopopup plugin text domain
@@ -20,7 +20,7 @@ class mCatFilter
 	var $minWPversion = '2.1';				//!< Minimum required WP version
 	var $productDomain = 'mcatfilter'; 		//!< Product domain name
 	var $productName;						//!< Product name
-	var $version = '0.4.1';					//!< Software version number
+	var $version = '0.4.2';					//!< Software version number
 	var $categories;						//!< Excluded categories list
 	var $do_not_exclude_from_tag_pages;		//!< Not excluded from tag pages flag
 	var $do_not_exclude_from_feeds;			//!< Not excluded from feeds flag
@@ -125,7 +125,11 @@ class mCatFilter
 	*/
 	function load_options()
 	{
-		$options = unserialize(get_option('mcatfilter_options'));
+		$opt = get_option('mcatfilter_options');
+		if (is_string($opt))
+			$options = unserialize($opt);
+		else
+			$options = $opt;
 		
 		$this->categories = $options->categories;
 		$this->do_not_exclude_from_tag_pages = $options->do_not_exclude_from_tag_pages;
@@ -379,7 +383,11 @@ jQuery(function() {
 		}
 		else if (version_compare($installed_version, '0.4.1') < 0)
 		{
-			$options = unserialize(get_option('mcatfilter_options'));
+			$opt = get_option('mcatfilter_options');
+			if (is_string($opt))
+				$options = unserialize($opt);
+			else
+				$options = $opt;
 			$options->do_not_exclude_from_feeds = false;
 			
 			$cats = array();
@@ -390,6 +398,8 @@ jQuery(function() {
 			update_option('mcatfilter_options', serialize($options));
 			update_option('mcatfilter_version', $this->version);
 		}
+		else if (version_compare($installed_version, '0.4.2') < 0)
+			update_option('mcatfilter_version', $this->version);
 	}
 	
 	/** \brief Category filter
