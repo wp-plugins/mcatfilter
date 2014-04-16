@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: chsxf
 Tags: mcatfilter, category, exclude, filter, loop
-Requires at least: 2.1
-Tested up to: 2.9.2
-Stable tag: 0.4.2
+Requires at least: 3.2
+Tested up to: 3.9
+Stable tag: 0.5
 
 Excludes categories from The Loop for display on the home page, in feeds and some archive pages.
 
@@ -18,19 +18,10 @@ mCatFilter for WordPress allows you to exclude categories from The Loop for disp
 * Excluded categories are still available through custom queries 
 * Fully integrated with the WordPress internationalization API
 
-= Fixes and improvements of version 0.4.2 =
-
-* Fixes a display bug when saving options
-
-= Upcoming additions and improvements =
-
-* Full control of exclusion filter extent from category edition form
-* Best control of exclusion filter extent with loops in page templates
-
 = System requirements =
 
-* PHP version **4.3.0** or higher
-* WordPress 2.1+
+* PHP version **5.2.4** or higher
+* WordPress 3.2+
 
 == Installation ==
 
@@ -59,16 +50,23 @@ By default, mCatFilter does not exclude any category. To select excluded categor
 1. Click "Save changes" button
 1. *You're done !* Selected categories should be excluded from default queries
 
-From version 0.2, you can also select/deselect a category for exclusion from the edit category form.
+You can also select/deselect a category for exclusion from the edit category form.
+
+== Changelog ==
+
+0.5:
+
+- Updated for WordPress 3.9
 
 == Online Resources ==
 
-If you have any questions that aren't addressed in this document, please visit [our website](http://www.xhaleera.com) and its [mCatFilter dedicated section](http://www.xhaleera.com/index.php/products/wordpress-mseries-plugins/mcatfilter/).
+If you have any questions that aren't addressed in this document, please visit [the support forums](http://wordpress.org/support/plugin/mcatfilter).
 
 == Known issues ==
 
 None at this time 
 
 == License ==
+
 mCatFilter, as WordPress, is released under the terms of the GNU GPL v2 (see license.txt).
-Permission to use, copy, modify, and distribute this software and its documentation under the terms of the GNU General Public License is hereby granted. No representations are made about the suitability of this software for any purpose. It is provided �as is� without express or implied warranty.
+Permission to use, copy, modify, and distribute this software and its documentation under the terms of the GNU General Public License is hereby granted. No representations are made about the suitability of this software for any purpose. It is provided "as is" without express or implied warranty.
