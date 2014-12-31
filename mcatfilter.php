@@ -5,7 +5,7 @@ Plugin URI: http://www.xhaleera.com/index.php/products/wordpress-mseries-plugins
 Description: Excludes categories from The Loop for display on the home page, in feeds and in archive pages.
 Author: Christophe SAUVEUR
 Author URI: http://www.xhaleera.com
-Version: 0.5
+Version: 0.5.1
 */
 
 // Loading mautopopup plugin text domain
@@ -393,7 +393,7 @@ jQuery(function() {
 			update_option('mcatfilter_options', serialize($options));
 			update_option('mcatfilter_version', $this->version);
 		}
-		else if (version_compare($installed_version, '0.4.2') < 0)
+		else if (version_compare($installed_version, $this->version) < 0)
 			update_option('mcatfilter_version', $this->version);
 	}
 	

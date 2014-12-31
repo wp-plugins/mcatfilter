@@ -2,8 +2,8 @@
 Contributors: chsxf
 Tags: mcatfilter, category, exclude, filter, loop
 Requires at least: 3.2
-Tested up to: 3.9
-Stable tag: 0.5
+Tested up to: 4.1
+Stable tag: 0.5.1
 
 Excludes categories from The Loop for display on the home page, in feeds and some archive pages.
 
@@ -53,6 +53,10 @@ By default, mCatFilter does not exclude any category. To select excluded categor
 You can also select/deselect a category for exclusion from the edit category form.
 
 == Changelog ==
+
+0.5.1:
+
+- Fixed a bug in plugin options preventing the plugin from working
 
 0.5:
 

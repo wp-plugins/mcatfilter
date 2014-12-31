@@ -2,120 +2,118 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mCatFilter 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-13 21:17+0100\n"
-"PO-Revision-Date: 2010-05-13 21:18+0100\n"
-"Last-Translator: Christophe SAUVEUR <christophe@xhaleera.com>\n"
+"POT-Creation-Date: 2014-12-31 11:24+0100\n"
+"PO-Revision-Date: 2014-12-31 11:24+0100\n"
+"Last-Translator: \n"
 "Language-Team: Xhaleera <contact@xhaleera.com>\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Generator: Poedit 1.7.1\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../mcatfilter.php:37
+#: ../mcatfilter.php:32
 msgid "mCatFilter"
 msgstr "mCatFilter"
 
-#: ../mcatfilter.php:151
+#: ../mcatfilter.php:150
 msgid "Unsupported WordPress version"
 msgstr "Version de WordPress non supportée"
 
-#: ../mcatfilter.php:152
+#: ../mcatfilter.php:151
 #, php-format
 msgid "This plugin requires WordPress %s or later version."
 msgstr "Cette extension requiert WordPress %s ou une version ultérieure."
 
-#: ../mcatfilter.php:173
+#: ../mcatfilter.php:172
 msgid "Do not exclude from tag pages"
 msgstr "Ne pas exclure des pages de Mots-clefs"
 
-#: ../mcatfilter.php:177
+#: ../mcatfilter.php:176
 msgid "Do not exclude from feeds"
 msgstr "Ne pas exclure des flux"
 
-#: ../mcatfilter.php:181
+#: ../mcatfilter.php:180
 msgid "Select for exclusion"
 msgstr "Sélectionner pour l'exclusion"
 
-#: ../mcatfilter.php:187
+#: ../mcatfilter.php:186
 msgid "Name"
 msgstr "Nom"
 
-#: ../mcatfilter.php:188
+#: ../mcatfilter.php:187
 msgid "Description"
 msgstr "Description"
 
-#: ../mcatfilter.php:189
+#: ../mcatfilter.php:188
 msgid "Posts"
 msgstr "Articles"
 
-#: ../mcatfilter.php:204
+#: ../mcatfilter.php:203
 msgid "Don't exclude anymore"
 msgstr "Ne plus exclure"
 
-#: ../mcatfilter.php:204
+#: ../mcatfilter.php:203
 msgid "Exclude"
 msgstr "Exclure"
 
-#: ../mcatfilter.php:205
+#: ../mcatfilter.php:204
 msgid "Specific exclusions"
 msgstr "Exclusions spécifiques"
 
-#: ../mcatfilter.php:208
+#: ../mcatfilter.php:207
 msgid "All"
 msgstr "Tout"
 
-#: ../mcatfilter.php:210
+#: ../mcatfilter.php:209
 msgid "Home page"
 msgstr "Page d'accueil"
 
-#: ../mcatfilter.php:211
+#: ../mcatfilter.php:210
 msgid "Search results"
 msgstr "Résultats de recherche"
 
-#: ../mcatfilter.php:212
+#: ../mcatfilter.php:211
 msgid "Feeds"
 msgstr "Flux"
 
-#: ../mcatfilter.php:214
+#: ../mcatfilter.php:213
 msgid "Tag archive pages"
 msgstr "Pages d'archive de mot-clé"
 
-#: ../mcatfilter.php:215
+#: ../mcatfilter.php:214
 msgid "Author archive pages"
 msgstr "Pages d'archive d'auteur"
 
-#: ../mcatfilter.php:216
+#: ../mcatfilter.php:215
 msgid "Date archive pages"
 msgstr "Pages d'archive par date"
 
-#: ../mcatfilter.php:217
+#: ../mcatfilter.php:216
 msgid "Exclude only from :"
 msgstr "Exclure uniquement de :"
 
-#: ../mcatfilter.php:244
+#: ../mcatfilter.php:243
 msgid "Save changes"
 msgstr "Sauvegarder les modifications"
 
-#: ../mcatfilter.php:341
+#: ../mcatfilter.php:340
 msgid "Chages have been succesfully saved."
 msgstr "Les modifications ont été sauvegardées avec succès."
 
-#: ../mcatfilter.php:432
-#: ../mcatfilter.php:441
+#: ../mcatfilter.php:439 ../mcatfilter.php:448
 msgid "mCatFilter additional options"
 msgstr "Options additionnelles de mCatFilter"
 
-#: ../mcatfilter.php:433
-#: ../mcatfilter.php:442
+#: ../mcatfilter.php:440 ../mcatfilter.php:449
 msgid "Select this category for exclusion"
 msgstr "Sélectionner cette catégorie pour l'exclusion"
 
-#: ../mcatfilter.php:454
+#: ../mcatfilter.php:461
 msgid "Setup"
 msgstr "Configuration"
 
@@ -125,11 +123,8 @@ msgstr "Configuration"
 #~ msgid "Global Setup"
 #~ msgstr "Configuration Globale"
 
-#~ msgid ""
-#~ "The selected categories will now be excluded from standard post requests."
-#~ msgstr ""
-#~ "Les catégories sélectionnées seront à présent exclues des requêtes "
-#~ "standard d'articles."
+#~ msgid "The selected categories will now be excluded from standard post requests."
+#~ msgstr "Les catégories sélectionnées seront à présent exclues des requêtes standard d'articles."
 
 #~ msgid "No version installed."
 #~ msgstr "Aucune version installée."
@@ -146,26 +141,14 @@ msgstr "Configuration"
 #~ msgid "You are currently using %s version %s."
 #~ msgstr "Vous utilisez actuellement %s version %s."
 
-#~ msgid ""
-#~ "Yet, your database seems to match a more recent version of the plugin "
-#~ "(version %s)."
-#~ msgstr ""
-#~ "Cependant, votre base de données semble correspondre à une version plus "
-#~ "récente de cette extension (version %s)."
+#~ msgid "Yet, your database seems to match a more recent version of the plugin (version %s)."
+#~ msgstr "Cependant, votre base de données semble correspondre à une version plus récente de cette extension (version %s)."
 
-#~ msgid ""
-#~ "You must reinstall %s before any further use or get back to a suitable "
-#~ "version of the software."
-#~ msgstr ""
-#~ "Vous devez réinstaller %s avant de pouvoir continuer à vous en servir ou "
-#~ "revenir à une version correspondate du logiciel."
+#~ msgid "You must reinstall %s before any further use or get back to a suitable version of the software."
+#~ msgstr "Vous devez réinstaller %s avant de pouvoir continuer à vous en servir ou revenir à une version correspondate du logiciel."
 
-#~ msgid ""
-#~ "If you choose to reinstall the plugin, all formerly saved options will be "
-#~ "lost."
-#~ msgstr ""
-#~ "Si vous choisissez de réinstaller l'extension, toutes les options "
-#~ "préalablement sauvegardées seront perdues."
+#~ msgid "If you choose to reinstall the plugin, all formerly saved options will be lost."
+#~ msgstr "Si vous choisissez de réinstaller l'extension, toutes les options préalablement sauvegardées seront perdues."
 
 #~ msgid "Reinstall %s"
 #~ msgstr "Réinstaller %s"
@@ -176,12 +159,8 @@ msgstr "Configuration"
 #~ msgid "Before now, you were using version %s of %s."
 #~ msgstr "Jusqu'à présent, vous utilisiez la version %s de %s."
 
-#~ msgid ""
-#~ "The new installed version is %s and your database must be upgraded before "
-#~ "any further use."
-#~ msgstr ""
-#~ "La nouvelle version installée est la %s et votre base de données doit "
-#~ "être mise à jour avant de pouvoir continuer à l'utiliser."
+#~ msgid "The new installed version is %s and your database must be upgraded before any further use."
+#~ msgstr "La nouvelle version installée est la %s et votre base de données doit être mise à jour avant de pouvoir continuer à l'utiliser."
 
 #~ msgid "Upgrade %s"
 #~ msgstr "Mettre à Jour %s"
